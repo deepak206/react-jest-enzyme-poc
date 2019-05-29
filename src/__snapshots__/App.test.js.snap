@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly with no props 1`] = `
+<Fragment>
+  <Component
+    page="http://www.instagram.com"
+  >
+    Instagram
+  </Component>
+  <Header />
+   
+</Fragment>
+`;
