@@ -1,14 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
-import { shallow, configure , mount} from 'enzyme';
+import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+configure({ adapter: new Adapter() });
 
-configure({adapter: new Adapter()});
+describe('App component', () => {
+  it('starts with a count of 0', () => {
+    const wrapper = shallow(<App />);
+    const text = wrapper.find('p').text();
+    expect(text).toEqual('Count: 0');
 
-it('should render correctly with no props', () => {
-  const component = shallow(<App/>);
-  
-  expect(component).toMatchSnapshot();
+    const incrementBtn = wrapper.find('button.increment');
+    incrementBtn.simulate('click');
+    const afterClickText = wrapper.find('p').text();
+    expect(afterClickText).toEqual('Count: 1');
+  });
 });
