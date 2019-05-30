@@ -15,5 +15,10 @@ describe('App component', () => {
     incrementBtn.simulate('click');
     const afterClickText = wrapper.find('p').text();
     expect(afterClickText).toEqual('Count: 1');
+
+    const decrementBtn = wrapper.find('button.decrement');
+    decrementBtn.simulate('click');
+    const decrementText = wrapper.find('p').text();
+    expect(decrementText).toEqual('Count: 0');
   });
 });

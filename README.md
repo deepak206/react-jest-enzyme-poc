@@ -1,68 +1,66 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<b>UNIT TEST REACT APPLICATIONS WITH JEST AND ENZYME</b>
 
-## Available Scripts
+<b>Set up a React application</b>
 
-In the project directory, you can run:
+Before we can write any tests, we need to create an application we can test. 
 
-### `npm start`
+npm install -g create-react-app
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+create-react-app REACT_JEST_ENGYME_POC
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+<b>Jest</b>
 
-### `npm test`
+Jest is a JavaScript unit testing framework, used by Facebook to test services and React applications.
+Jest acts as a test runner, assertion library, and mocking library.
+Jest also provides Snapshot testing, the ability to create a rendered ‘snapshot’ of a component and compare it to a previously saved ‘snapshot’. The test will fail if the two do not match. Snapshots will be saved for you beside the test file that created them in an auto-generate __snapshots__ folder.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<b>Enzyme</b>
+Enzyme is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components’ output.
 
-### `npm run build`
+<b>Jest and Enzyme</b>
+1) Both Jest and Enzyme are specifically designed to test React applications, Jest can be used with any other Javascript app but Enzyme only works with React.
+2) Jest can be used without Enzyme to render components and test with snapshots, Enzyme simply adds additional functionality.
+3) Enzyme can be used without Jest, however Enzyme must be paired with another test runner if Jest is not used.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<b>Setup</b>
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Install Jest:
+npm install --save-dev jest babel-jest
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Install Enzyme:
+npm install --save-dev enzyme enzyme-adapter-react-16 enzyme-to-json
 
-### `npm run eject`
+Inside package.json:
+"jest": {
+  "snapshotSerializers": ["enzyme-to-json/serializer"]
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<b>Creating a test file:</b>
+1) Files with  .js suffix in __tests__ folders.
+2) Files with .test.js suffix.
+3) Files with .spec.js suffix.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<b>Mount, Shallow, Render</b>
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+import { mount, shallow, render } from ‘enzyme';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+<b>Mounting</b>
+1) Full DOM rendering including child components
+2) Ideal for use cases where you have components that may interact with DOM API, or use React lifecycle methods in order to fully test the component
+3) As it actually mounts the component in the DOM .unmount() should be called after each tests to stop tests affecting each other
+4) Allows access to both props directly passed into the root component (including default props) and props passed into child components
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<b>Shallow</b>
+1) Renders only the single component, not including its children. This is useful to isolate the component for pure unit testing. It protects against changes or bugs in a child component altering the behaviour or output of the component under test
+2) As of Enzyme 3 shallow components do have access to lifecycle methods by default
+3) Cannot access props passed into the root component (therefore also not default props), but can those passed into child components, and can test the effect of props passed into the root component. This is as with shallow(<MyComponent />), you're testing what MyComponent renders - not the element you passed into shallow
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<b>Render</b>
+1) Renders to static HTML, including children
+2) Does not have access to React lifecycle methods
+3) Less costly than mount but provides less functionality
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<b>Run Test:</b>
+npm test

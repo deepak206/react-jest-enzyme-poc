@@ -15,11 +15,14 @@ class App extends Component {
 
   increment = this.makeIncrementer(1);
 
+  decrement = this.makeIncrementer(-1);
+
   render() {
     return (
       <div>
         <p>Count: {this.state.count}</p>
         <button className="increment" onClick={this.increment}>Increment count</button>
+        <button className="decrement" onClick={this.decrement}>Decrement count</button>
       </div>
     )
   }
