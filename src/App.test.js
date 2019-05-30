@@ -21,4 +21,11 @@ describe('App component', () => {
     const decrementText = wrapper.find('p').text();
     expect(decrementText).toEqual('Count: 0');
   });
+
+  //snapshot testing
+  it('Snapshot testing', () => {
+    const component = shallow(<App debug />);
+  
+    expect(component).toMatchSnapshot();
+  });
 });
